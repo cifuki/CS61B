@@ -20,7 +20,7 @@ public class NBody {
         int start = 0;
         double radius = in.readDouble();
         Planet[] planets = new Planet[num];
-        while (start != 5) {
+        while (start != num) {
             double xxPos = in.readDouble();
             double yyPos = in.readDouble();
             double xxVel = in.readDouble();
