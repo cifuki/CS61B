@@ -43,9 +43,9 @@ public class NBody {
 
         double radius = readRadius(file);
         Planet[] planets = readPlanets(file);
-        int num = planets.length;
 
         StdDraw.enableDoubleBuffering();
+        StdDraw.setScale(-radius, radius);
         /*
         画图
         让卫星按时间更新位置
@@ -57,17 +57,15 @@ public class NBody {
             xForces[i] = planets[i].calcNetForceExertedByX(planets);
             yForces[i] = planets[i].calcNetForceExertedByY(planets);
         }
-        while (dt < T) {
-            StdDraw.setScale(-radius, radius);
+        for (int t = 0; t < T; t += dt) {
             StdDraw.picture(0, 0, "./images/starfield.jpg");
-            for (int i = 0; i < num; i++) {
+            for (int i = 0; i < planets.length; i++) {
                 planets[i].draw();
                 planets[i].update(dt, xForces[i], yForces[i]);
             }
             StdDraw.show();
             StdDraw.pause(10);
             StdDraw.clear();
-            dt += 10;
         }
 
         StdOut.printf("%d\n", planets.length);
