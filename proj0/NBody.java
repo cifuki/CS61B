@@ -61,7 +61,8 @@ public class NBody {
             StdDraw.setScale(-radius, radius);
             StdDraw.picture(0, 0, "./images/starfield.jpg");
             for (int i = 0; i < num; i++) {
-                planets[i].draw(dt, xForces[i], yForces[i]);
+                planets[i].draw();
+                planets[i].update(dt, xForces[i], yForces[i]);
             }
             StdDraw.show();
             StdDraw.pause(10);

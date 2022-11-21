@@ -122,9 +122,8 @@ public class Planet {
         this.yyPos = yyNewPos;
     }
 
-    public void draw(double dt, double xForce, double yForce) {
+    public void draw() {
         String imagePath = "./images/";
-        StdDraw.picture(xxPos, yyPos, imagePath + imgFileName);
-        update(dt, xForce, yForce);
+        StdDraw.picture(this.xxPos, this.yyPos, imagePath + this.imgFileName);
     }
 }
