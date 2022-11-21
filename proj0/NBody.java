@@ -1,4 +1,3 @@
-import examples.StdDraw;
 import java.util.ArrayList;
 
 public class NBody {
