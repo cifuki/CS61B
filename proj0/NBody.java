@@ -35,15 +35,26 @@ public class NBody {
         return planets;
     }
 
+    /*
+    绘图
+     */
+    public static void draw(int num, double dt, double xForce, double yForce, Planet planet) {
+        String imagePath = "./images/";
+        for (int i = 0; i < num; i++) {
+            StdDraw.picture(planet.xxPos, planet.yyPos, imagePath + planet.imgFileName);
+            planet.update(dt, xForce, yForce);
+        }
+    }
+
     public static void main(String[] args) {
         //读取入参
-        double T = Double.parseDouble(args[0]);
-        double dt = Double.parseDouble(args[1]);
+        double T = Double.parseDouble(args[0])/1000;
+        double dt = Double.parseDouble(args[1])/1000;
         String file = args[2];
 
         double radius = readRadius(file);
         Planet[] planets = readPlanets(file);
-        String imagePath = "./images/";
+        int num = planets.length;
 
         StdDraw.enableDoubleBuffering();
         /*
@@ -60,9 +71,8 @@ public class NBody {
         while (dt < T) {
             StdDraw.setScale(-radius, radius);
             StdDraw.picture(0, 0, "./images/starfield.jpg");
-            for (int i = 0; i < planets.length; i++) {
-                StdDraw.picture(planets[i].xxPos, planets[i].yyPos, imagePath + planets[i].imgFileName);
-                planets[i].update(dt, xForces[i], yForces[i]);
+            for (int i = 0; i < num; i++) {
+                draw(num, dt, xForces[i], yForces[i], planets[i]);
             }
             StdDraw.show();
             StdDraw.pause(10);
