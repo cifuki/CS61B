@@ -46,6 +46,7 @@ public class NBody {
 
         StdDraw.enableDoubleBuffering();
         StdDraw.setScale(-radius, radius);
+
         /*
         画图
         让卫星按时间更新位置
@@ -53,12 +54,15 @@ public class NBody {
          */
         double[] xForces = new double[planets.length];
         double[] yForces = new double[planets.length];
-        for (int i = 0; i < planets.length; i++) {
-            xForces[i] = planets[i].calcNetForceExertedByX(planets);
-            yForces[i] = planets[i].calcNetForceExertedByY(planets);
-        }
+
         for (int t = 0; t < T; t += dt) {
             StdDraw.picture(0, 0, "./images/starfield.jpg");
+            //重新计算受力
+            for (int i = 0; i < planets.length; i++) {
+                xForces[i] = planets[i].calcNetForceExertedByX(planets);
+                yForces[i] = planets[i].calcNetForceExertedByY(planets);
+            }
+            //绘图
             for (int i = 0; i < planets.length; i++) {
                 planets[i].draw();
                 planets[i].update(dt, xForces[i], yForces[i]);
