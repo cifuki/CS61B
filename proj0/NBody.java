@@ -37,8 +37,8 @@ public class NBody {
 
     public static void main(String[] args) {
         //读取入参
-        double T = Double.parseDouble(args[0])/1000;
-        double dt = Double.parseDouble(args[1])/1000;
+        double T = Double.parseDouble(args[0]);
+        double dt = Double.parseDouble(args[1]);
         String file = args[2];
 
         double radius = readRadius(file);
