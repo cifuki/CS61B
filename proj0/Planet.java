@@ -121,5 +121,10 @@ public class Planet {
         this.xxPos = xxNewPos;
         this.yyPos = yyNewPos;
     }
-    
+
+    public void draw(double dt, double xForce, double yForce) {
+        String imagePath = "./images/";
+        StdDraw.picture(xxPos, yyPos, imagePath + imgFileName);
+        update(dt, xForce, yForce);
+    }
 }

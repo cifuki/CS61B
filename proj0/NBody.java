@@ -35,17 +35,6 @@ public class NBody {
         return planets;
     }
 
-    /*
-    绘图
-     */
-    public static void draw(int num, double dt, double xForce, double yForce, Planet planet) {
-        String imagePath = "./images/";
-        for (int i = 0; i < num; i++) {
-            StdDraw.picture(planet.xxPos, planet.yyPos, imagePath + planet.imgFileName);
-            planet.update(dt, xForce, yForce);
-        }
-    }
-
     public static void main(String[] args) {
         //读取入参
         double T = Double.parseDouble(args[0])/1000;
@@ -72,7 +61,7 @@ public class NBody {
             StdDraw.setScale(-radius, radius);
             StdDraw.picture(0, 0, "./images/starfield.jpg");
             for (int i = 0; i < num; i++) {
-                draw(num, dt, xForces[i], yForces[i], planets[i]);
+                planets[i].draw(dt, xForces[i], yForces[i]);
             }
             StdDraw.show();
             StdDraw.pause(10);
