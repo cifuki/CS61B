@@ -1,3 +1,8 @@
+/**
+ * @className NBody
+ * @author caifuqi
+ * @createDate 2022-11-22 16:05
+ */
 public class Planet {
     public double xxPos;
     public double yyPos;
@@ -25,7 +30,11 @@ public class Planet {
         this.imgFileName = p.imgFileName;
     }
 
-    /* 勾股定理 */
+    /**
+     * @description 勾股定理代码实现
+     * @param planet 目标行星
+     * @return 与目标行星的直线距离
+     */
     public double calcDistance(Planet planet) {
         double dx = this.xxPos - planet.xxPos;
         double dy = this.yyPos - planet.yyPos;
@@ -33,7 +42,11 @@ public class Planet {
         return r;
     }
 
-    /* 万有引力定律 */
+    /**
+     * @description 万有引力定律代码实现
+     * @param planet 目标行星
+     * @return 目标行星作用在本行星上的力
+     */
     public double calcForceExertedBy(Planet planet) {
         double F;
         double r = calcDistance(planet);
@@ -45,9 +58,11 @@ public class Planet {
         return F;
     }
 
-    /*
-    * 计算单个星球在x轴上的引力
-    */
+    /**
+     * @description 力的分解，计算单个星球在x轴上的引力
+     * @param planet 目标行星
+     * @return x轴上，目标行星作用在本行星上的力
+     */
     public double calcForceExertedByX(Planet planet) {
         double fx;
         double dx = planet.xxPos - this.xxPos;
@@ -61,8 +76,10 @@ public class Planet {
         return fx;
     }
 
-    /*
-     * 计算单个星球在y轴上的引力
+    /**
+     * @description 力的分解，计算单个星球在y轴上的引力
+     * @param planet 目标行星
+     * @return y轴上，目标行星作用在本行星上的力
      */
     public double calcForceExertedByY(Planet planet) {
         double fy;
@@ -77,8 +94,10 @@ public class Planet {
         return fy;
     }
 
-    /*
-     * 计算多个星球在x轴上的引力总和
+    /**
+     * @description 计算多个星球在x轴上的引力总和
+     * @param allPlanets 其他各行星
+     * @return x轴上，其他各行星作用在本行星上的力的总和
      */
     public double calcNetForceExertedByX(Planet[] allPlanets) {
         double netFx = 0;
@@ -90,8 +109,10 @@ public class Planet {
     }
 
 
-    /*
-     * 计算多个星球在y轴上的引力总和
+    /**
+     * @description 计算多个星球在y轴上的引力总和
+     * @param allPlanets 其他各行星
+     * @return y轴上，其他各行星作用在本行星上的力的总和
      */
     public double calcNetForceExertedByY(Planet[] allPlanets) {
         double netFy = 0;
@@ -102,6 +123,12 @@ public class Planet {
         return netFy;
     }
 
+    /**
+     * @description 更新行星的x、y轴的坐标以及速度
+     * @param time 单位时间
+     * @param netFx x轴的受力
+     * @param netFy y轴的受力
+     */
     public void update(double time, double netFx, double netFy) {
         //计算各方向的加速度
         double ax = netFx / this.mass;
@@ -122,6 +149,9 @@ public class Planet {
         this.yyPos = yyNewPos;
     }
 
+    /**
+     * @description 在图上根据坐标绘制行星
+     */
     public void draw() {
         String imagePath = "./images/";
         StdDraw.picture(this.xxPos, this.yyPos, imagePath + this.imgFileName);

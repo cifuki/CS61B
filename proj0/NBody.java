@@ -1,8 +1,15 @@
 import java.util.ArrayList;
 
+/**
+ * @className NBody
+ * @author caifuqi
+ * @createDate 2022-11-22 16:02
+ */
 public class NBody {
-    /*
-    读取画图的半径
+    /**
+     * @description 读取画图的半径
+     * @param file 数据文件
+     * @return 画图半径
      */
     public static double readRadius(String file) {
         In in = new In(file);
@@ -11,8 +18,10 @@ public class NBody {
         return radius;
     }
 
-    /*
-    读取每个星球的参数
+    /**
+     * @description 读取每个星球的参数，包括x、y轴坐标与速度，行星质量以及图片
+     * @param file 数据文件
+     * @return 各行星参数
      */
     public static Planet[] readPlanets(String file) {
         In in = new In(file);
@@ -36,7 +45,7 @@ public class NBody {
     }
 
     public static void main(String[] args) {
-        //读取入参
+        /* 读取入参 */
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
         String file = args[2];
@@ -48,21 +57,21 @@ public class NBody {
         StdDraw.setScale(-radius, radius);
 
         /*
-        画图
-        让卫星按时间更新位置
-        算受力-->算加速度-->算速度-->算位置-->更新位置
+         * 画图
+         * 让卫星按时间更新位置
+         * 算受力-->算加速度-->算速度-->算位置-->更新位置
          */
         double[] xForces = new double[planets.length];
         double[] yForces = new double[planets.length];
 
         for (int t = 0; t < T; t += dt) {
             StdDraw.picture(0, 0, "./images/starfield.jpg");
-            //重新计算受力
+            /* 当各行星的位置更新后，需重新计算受力 */
             for (int i = 0; i < planets.length; i++) {
                 xForces[i] = planets[i].calcNetForceExertedByX(planets);
                 yForces[i] = planets[i].calcNetForceExertedByY(planets);
             }
-            //绘图
+            /* 绘图 */
             for (int i = 0; i < planets.length; i++) {
                 planets[i].draw();
                 planets[i].update(dt, xForces[i], yForces[i]);
@@ -72,6 +81,7 @@ public class NBody {
             StdDraw.clear();
         }
 
+        /* 标准化打印最终行星的各项参数 */
         StdOut.printf("%d\n", planets.length);
         StdOut.printf("%.2e\n", radius);
         for (int i = 0; i < planets.length; i++) {
