@@ -1,5 +1,5 @@
 /**
- * @className NBody
+ * @className Planet
  * @author caifuqi
  * @createDate 2022-11-22 16:05
  */
