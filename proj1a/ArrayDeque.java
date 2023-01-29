@@ -120,6 +120,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
+        if (size == 1) {
+            T item = array[0];
+            array[0] = null;
+            size -= 1;
+            return item;
+        }
         T[] newArray = (T[]) new Object[size - 1];
         T item = array[0];
         for (int i = 1; i < size; i++) {
@@ -152,6 +158,9 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null. Must not alter the deque!
      */
     public T get(int index) {
+        if (index >= size) {
+            return null;
+        }
         return array[index];
     }
 

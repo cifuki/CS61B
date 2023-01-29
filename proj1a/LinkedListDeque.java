@@ -149,6 +149,7 @@ public class LinkedListDeque<T> {
      * recursion version of get
      */
     public T getRecursive(int index) {
+        // sentinelPrev节点不变的情况下如何实现？
         if (size == 0 || index >= size) {
             return null;
         }
@@ -156,9 +157,9 @@ public class LinkedListDeque<T> {
         Node search = sentinelPrev;
 
         if (index == 0) {
-            return (T) search.item;
+            return (T) search.next.item;
         } else {
-            search = search.next;
+            sentinelPrev = sentinelPrev.next;
             return getRecursive(index - 1);
         }
     }
