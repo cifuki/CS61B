@@ -85,11 +85,12 @@ public class ArrayDequeTest {
         addIsEmptySizeTest();
         addRemoveTest();
         ArrayDeque ad1 = new ArrayDeque();
-        ad1.isEmpty();
+        ad1.addLast(0);
         ad1.addFirst(1);
         ad1.removeFirst();
-        ad1.isEmpty();
-        ad1.addFirst(4);
+        ad1.size();
+        ad1.removeLast();
+        ad1.addLast(5);
 
     }
 }
