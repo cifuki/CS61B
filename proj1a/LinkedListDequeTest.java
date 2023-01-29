@@ -1,6 +1,5 @@
 /** Performs some basic linked list tests. */
 public class LinkedListDequeTest {
-	
 	/* Utility method for printing out empty checks. */
 	public static boolean checkEmpty(boolean expected, boolean actual) {
 		if (expected != actual) {
@@ -57,7 +56,6 @@ public class LinkedListDequeTest {
 		lld1.printDeque();
 
 		printTestStatus(passed);
-
 	}
 
 	/** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
@@ -78,12 +76,17 @@ public class LinkedListDequeTest {
 		passed = checkEmpty(true, lld1.isEmpty()) && passed;
 
 		printTestStatus(passed);
-
 	}
 
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+		LinkedListDeque lld = new LinkedListDeque();
+		lld.addFirst(0);
+		lld.addFirst(1);
+		lld.addFirst(2);
+		lld.addFirst(3);
+		lld.removeLast();
 	}
 } 

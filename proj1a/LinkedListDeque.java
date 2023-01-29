@@ -5,20 +5,20 @@ public class LinkedListDeque<T> {
     private Node<T> sentinelNext; //后向哨兵节点
 
     /* 构造器 */
-    public LinkedListDeque(T item) {
-        size = 1;
-        Node node = new Node<>(item);
-        sentinelPrev = (Node<T>) new Node<>(-1);
-        sentinelNext = (Node<T>) new Node<>(1);
-
-        sentinelPrev.next = node;
-        node.prev = sentinelPrev;
-        node.next = sentinelNext;
-        sentinelNext.prev = node;
-
-        sentinelPrev.prev = null;
-        sentinelNext.next = null;
-    }
+//    public LinkedListDeque(T item) {
+//        size = 1;
+//        Node node = new Node<>(item);
+//        sentinelPrev = (Node<T>) new Node<>(-1);
+//        sentinelNext = (Node<T>) new Node<>(1);
+//
+//        sentinelPrev.next = node;
+//        node.prev = sentinelPrev;
+//        node.next = sentinelNext;
+//        sentinelNext.prev = node;
+//
+//        sentinelPrev.prev = null;
+//        sentinelNext.next = null;
+//    }
 
     public LinkedListDeque() {
         size = 0;
@@ -33,15 +33,15 @@ public class LinkedListDeque<T> {
     }
 
     /* Creates a deep copy of other */
-    public LinkedListDeque(LinkedListDeque other) {
-        LinkedListDeque newDeque = new LinkedListDeque();
-        Node iterate = other.sentinelPrev;
-
-        for (int i = 0; i < other.size(); i++) {
-            iterate = iterate.next;
-            newDeque.addLast(iterate);
-        }
-    }
+//    public LinkedListDeque(LinkedListDeque other) {
+//        LinkedListDeque newDeque = new LinkedListDeque();
+//        Node iterate = other.sentinelPrev;
+//
+//        for (int i = 0; i < other.size(); i++) {
+//            iterate = iterate.next;
+//            newDeque.addLast(iterate);
+//        }
+//    }
 
     /* Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
@@ -81,7 +81,9 @@ public class LinkedListDeque<T> {
         return size;
     }
 
-    /* Removes and returns the item at the front of the deque. If no such item exists, returns null. */
+    /** Removes and returns the item at the front of the deque.
+     *  If no such item exists, returns null.
+     */
     public T removeFirst() {
         if (size >= 1) {
             Node<T> removeNode = sentinelPrev.next;
@@ -101,7 +103,9 @@ public class LinkedListDeque<T> {
         return null;
     }
 
-    /* Removes and returns the item at the back of the deque. If no such item exists, returns null. */
+    /** Removes and returns the item at the back of the deque.
+     * If no such item exists, returns null.
+     */
     public T removeLast() {
         if (size >= 1) {
             Node<T> removeNode = sentinelNext.prev;
@@ -109,11 +113,13 @@ public class LinkedListDeque<T> {
             sentinelNext.prev = sentinelNext.prev.prev;
 
             //释放删除节点
+            T item = removeNode.item;
+            removeNode.next = null;
             removeNode.item = null;
             removeNode.prev = null;
 
             size -= 1;
-            return removeNode.item;
+            return item;
         }
 
         return null;

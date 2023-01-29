@@ -8,23 +8,23 @@ public class ArrayDeque<T> {
         array = (T[]) new Object[8];
     }
 
-    public ArrayDeque(int len) {
-        size = 0;
-        array = (T[]) new Object[len];
-    }
+//    public ArrayDeque(int len) {
+//        size = 0;
+//        array = (T[]) new Object[len];
+//    }
 
     /** Creates a deep copy of other. */
-    public ArrayDeque(ArrayDeque other) {
-        int len = other.size;
-        ArrayDeque newArrayDeque = new ArrayDeque(len);
-        for (int i = 0; i < size; i++) {
-            newArrayDeque.array[i] = other.array[i];
-            newArrayDeque.size += 1;
-        }
-    }
+//    public ArrayDeque(ArrayDeque other) {
+//        int len = other.size;
+//        ArrayDeque newArrayDeque = new ArrayDeque(len);
+//        for (int i = 0; i < size; i++) {
+//            newArrayDeque.array[i] = other.array[i];
+//            newArrayDeque.size += 1;
+//        }
+//    }
 
     /** 数组扩容 */
-    public T[] expansion() {
+    private T[] expansion() {
         T[] newArray;
 
         // 扩容需满足条件：当数组长度大于16时，利用率大于 25%
@@ -38,7 +38,7 @@ public class ArrayDeque<T> {
     }
 
     /** 数组右移 */
-    public T[] moveRight(T[] newArray) {
+    private T[] moveRight(T[] newArray) {
         for (int i = 0; i < size; i++) {
             newArray[i + 1] = array[i];
         }
@@ -112,7 +112,9 @@ public class ArrayDeque<T> {
         }
     }
 
-    /** Removes and returns the item at the front of the deque. If no such item exists, returns null. */
+    /** Removes and returns the item at the front of the deque.
+     * If no such item exists, returns null.
+     */
     public T removeFirst() {
         //创建一个新的数组并复制2...n个元素
         if (size == 0) {
@@ -128,14 +130,16 @@ public class ArrayDeque<T> {
         return item;
     }
 
-    /** Removes and returns the item at the back of the deque. If no such item exists, returns null. */
+    /** Removes and returns the item at the back of the deque.
+     * If no such item exists, returns null.
+     */
     public T removeLast() {
         if (size == 0) {
             return null;
         }
         T item = array[size - 1];
         T[] newArray = (T[]) new Object[size - 1];
-        for (int i = 0; i < size-1; i++) {
+        for (int i = 0; i < size - 1; i++) {
             newArray[i] = array[i];
         }
         array = newArray;
