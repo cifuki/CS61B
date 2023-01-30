@@ -65,7 +65,7 @@ public class ArrayDeque<T> {
             return null;
         }
         //从后向指针拿
-        right = (right - 1) % length;
+        right = (right - 1 + length) % length;
         T res = array[right];
         array[right] = null;
         //判断是否利用率低，如果是则需要缩容
@@ -87,7 +87,7 @@ public class ArrayDeque<T> {
 
         T res = array[left];
         array[left] = null;
-        left = (left + 1) % length;
+        left = (left + 1 + length) % length;
         //判断是否利用率低
         if (isLowUsage()) {
             resize((int) (length * 0.5));
@@ -153,14 +153,16 @@ public class ArrayDeque<T> {
     }
 
     /**
-     * Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
-     * If no such item exists, returns null. Must not alter the deque!
+     * 因为前向指针变动的问题，需要重新计算index
+     * 不在数组长度范围内的索引直接返回空
+     * 在数组内的直接返回数组中的值，因为remove操作时会将内容置空，所以无需考虑数组内的情况
      */
     public T get(int index) {
-        if ((index < left && index >= right) || index >= length) {
+        if (index < 0 || index >= length) {
             return null;
         }
 
+        index = (left + index + length) % length;
         return array[index];
     }
 }
