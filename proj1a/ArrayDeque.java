@@ -1,152 +1,145 @@
 public class ArrayDeque<T> {
-    private int size;
     private T[] array;
+    private int left;
+    private int right;
+    private int length;
 
-    /** constructor */
     public ArrayDeque() {
-        size = 0;
-        array = (T[]) new Object[8];
+        left = 0;
+        right = 0;
+        length = 3;
+        array = (T[]) new Object[length];
     }
 
-//    public ArrayDeque(int len) {
-//        size = 0;
-//        array = (T[]) new Object[len];
-//    }
-
-    /** Creates a deep copy of other. */
-//    public ArrayDeque(ArrayDeque other) {
-//        int len = other.size;
-//        ArrayDeque newArrayDeque = new ArrayDeque(len);
-//        for (int i = 0; i < size; i++) {
-//            newArrayDeque.array[i] = other.array[i];
-//            newArrayDeque.size += 1;
-//        }
-//    }
-
-    /** 数组扩容 */
-    private T[] expansion() {
-        T[] newArray;
-
-        // 扩容需满足条件：当数组长度大于16时，利用率大于 25%
-        // 并且扩容需要考虑扩容效率，不简单地使用'+'，而是使用'*'
-        if (size <= 3) {
-            newArray = (T[]) new Object[size * 2];
-        } else {
-            newArray = (T[]) new Object[(int) ((size + 1) / 0.25)];
-        }
-        return newArray;
-    }
-
-    /** 数组右移 */
-    private T[] moveRight(T[] newArray) {
-        for (int i = 0; i < size; i++) {
-            newArray[i + 1] = array[i];
-        }
-        return newArray;
-    }
-
-    /**
-     * Adds an item of type T to the front of the deque.
-     */
-    public void addFirst(T item) {
-        // 如何才能用常数时间完成节点添加，若考虑到扩容，则不可能用常量时间
-        // 如果列表为空，直接就可以item[0] = item;
-        // 如果列表不为空：1.首先判断加完后长度是否大于8，若大于则扩容；2.如果长度小于等于8，则需要移动整个数组，给第一个空出位置，O(n)
-        if (size != 0) {
-            T[] newArray;
-            newArray = expansion();
-            array = moveRight(newArray);
-        }
-        array[0] = item;
-        size += 1;
-
-    }
-
-    /**
-     * Adds an item of type T to the back of the deque.
-     */
-    public void addLast(T item) {
-        if (size < array.length) {
-            array[size] = item;
-            size += 1;
-        } else {
-            T[] newArray = expansion();
-            for (int i = 0; i < size; i++) {
-                newArray[i] = array[i];
-            }
-            newArray[size] = item;
-            array = newArray;
-            size += 1;
-
-        }
-    }
-
-    /**
-     * Returns true if deque is empty, false otherwise.
-     */
-    public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Returns the number of items in the deque.
-     */
     public int size() {
-        return size;
+        return (length - left + right) % length;
+    }
+
+    /** 当前向后向指针重合时，则代表为空 */
+    public boolean isEmpty() {
+        return left == right;
     }
 
     /**
-     * Prints the items in the deque from first to last, separated by a space.
-     * Once all the items have been printed, print out a new line.
+     * 数组还有一个位置的时候进行扩容，否则插入后数组就满了
+     * 同时可避免 left == right 也可能数组满的情况
      */
-    public void printDeque() {
-        for (int i = 0; i < size; i++) {
-            if (i == size - 1) {
-                System.out.println(array[i]);
-            } else {
-                System.out.print(array[i]);
-            }
-        }
+    private boolean isFull() {
+        return size() == length - 1;
     }
 
-    /** Removes and returns the item at the front of the deque.
-     * If no such item exists, returns null.
-     */
-    public T removeFirst() {
-        //创建一个新的数组并复制2...n个元素
-        if (size == 0) {
-            return null;
+    public void addLast(T item) {
+        //判断数组是否满了，满了则需要扩容
+        if (isFull()) {
+            resize((int) (length * 1.5));
         }
-        if (size == 1) {
-            T item = array[0];
-            array[0] = null;
-            size -= 1;
-            return item;
-        }
-        T[] newArray = (T[]) new Object[size - 1];
-        T item = array[0];
-        for (int i = 1; i < size; i++) {
-            newArray[i - 1] = array[i];
-        }
-        array = newArray;
-        size -= 1;
-        return item;
+        //将item插入后向指针所在的位置
+
+        array[right] = item;
+        right = (right + 1 + length) % length;
     }
 
-    /** Removes and returns the item at the back of the deque.
-     * If no such item exists, returns null.
+    public void addFirst(T item) {
+        if (isFull()) {
+            resize((int) (length * 1.5));
+        }
+        //将item插入前向指针所在的位置
+
+        left = (left -1 + length) % length;
+        array[left] = item;
+    }
+
+    /**
+     * 1.从后向指针拿
+     * 2.因为后向指针当前位置无内容，则需要先移动指针再拿，再赋空值
+     * 3.拿完判断是否需要缩容
      */
     public T removeLast() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         }
-        T item = array[size - 1];
-        array[size - 1] = null;
-        size -= 1;
-        return item;
+        //从后向指针拿
+        right = (right - 1) % length;
+        T res = array[right];
+        array[right] = null;
+        //判断是否利用率低，如果是则需要缩容
+        if (isLowUsage()) {
+            resize((int) (size() * 0.5));
+        }
+        return res;
+    }
+
+    /**
+     * 1.从前向指针拿
+     * 2.因为前向指针当前位置有内容，则需要先拿，赋空值，再移动指针
+     * 3.拿完判断是否需要缩容
+     */
+    public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        T res = array[left];
+        array[left] = null;
+        left = (left + 1) % length;
+        //判断是否利用率低
+        if (isLowUsage()) {
+            resize((int) (size() * 0.5));
+        }
+        return res;
+    }
+
+    private boolean isLowUsage() {
+        return size() == 16 && size() / length < 0.25;
+    }
+
+    /**
+     * 以前向指针为准，把前向指针指向的内容以此放到新的数组中
+     * 数组变长后，指针指向保持不变，即前向指针当前有内容，后向指针当前无内容
+     */
+    private void resize(int capacity) {
+        T[] newArray = (T[]) new Object[capacity];
+        int size = 0;
+        if (right > left) {
+            for (int i = left, j = 0; i < right; i++, j++) {
+                newArray[j] = array[i];
+                size += 1;
+            }
+        } else {
+            for (int i = left, j = 0; i != right; i++, j++) {
+                i = i % length;
+                newArray[j] = array[i];
+                size += 1;
+            }
+        }
+
+        array = newArray;
+        length = capacity;
+        left = 0;
+        right = size;
+    }
+
+    /**
+     * 根据前向指针顺序打印
+     */
+    public void printDeque() {
+        if (left < right) {
+            for (int i = left; i < right; i++) {
+                if (i == right - 1) {
+                    System.out.println(array[i]);
+                }
+                System.out.print(array[i]);
+            }
+        } else {
+            for (int i = left; i != right; i++) {
+                i = i % length;
+                if (i == right - 1) {
+                    System.out.println(array[i]);
+                } else {
+                    System.out.print(array[i]);
+                }
+            }
+        }
     }
 
     /**
@@ -154,11 +147,10 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null. Must not alter the deque!
      */
     public T get(int index) {
-        if (size == 0 || index >= size) {
+        if (index < left && index >= right) {
             return null;
         }
 
         return array[index];
     }
-
 }

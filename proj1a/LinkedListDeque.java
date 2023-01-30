@@ -1,3 +1,5 @@
+import java.lang.module.FindException;
+
 public class LinkedListDeque<T> {
     /* 类基本成员变量 */
     private static int size;   //记录链表长度
@@ -154,14 +156,14 @@ public class LinkedListDeque<T> {
             return null;
         }
 
-        Node search = sentinelPrev;
+        return getRecursive(sentinelPrev.next, index);
+    }
 
+    public T getRecursive(Node node, int index) {
         if (index == 0) {
-            return (T) search.next.item;
-        } else {
-            sentinelPrev = sentinelPrev.next;
-            return getRecursive(index - 1);
+            return (T) node.item;
         }
+        return getRecursive(node.next, index - 1);
     }
 
     /**
