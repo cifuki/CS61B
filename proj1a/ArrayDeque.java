@@ -133,8 +133,9 @@ public class ArrayDeque<T> {
         } else {
             for (int i = left; i != right; i++) {
                 i = i % length;
-                if (i == right - 1) {
+                if (i == ((right - 1 + length) % length)) {
                     System.out.println(array[i]);
+                    return;
                 } else {
                     System.out.print(array[i]);
                 }
@@ -147,7 +148,7 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null. Must not alter the deque!
      */
     public T get(int index) {
-        if (index < left && index >= right) {
+        if ((index < left && index >= right) || index >= length) {
             return null;
         }
 

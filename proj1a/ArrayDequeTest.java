@@ -81,8 +81,18 @@ public class ArrayDequeTest {
     }
 
     public static void main(String[] args) {
-        System.out.println("Running tests.\n");
-        addIsEmptySizeTest();
-        addRemoveTest();
+//        System.out.println("Running tests.\n");
+//        addIsEmptySizeTest();
+//        addRemoveTest();
+        ArrayDeque ad1 = new ArrayDeque();
+        ad1.addFirst(0);
+        ad1.isEmpty();
+        ad1.addFirst(2);
+        ad1.addFirst(3);
+        ad1.addFirst(4);
+        ad1.addFirst(5);
+        ad1.isEmpty();
+        ad1.removeFirst();
+        ad1.printDeque();
     }
 }
