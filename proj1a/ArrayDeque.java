@@ -1,4 +1,5 @@
 public class ArrayDeque<T> {
+
     private T[] array;
     private int left;
     private int right;
@@ -50,7 +51,7 @@ public class ArrayDeque<T> {
             resize((int) (length * 1.5));
         }
 
-        left = (left -1 + length) % length;
+        left = (left - 1 + length) % length;
         array[left] = item;
     }
 
@@ -95,7 +96,7 @@ public class ArrayDeque<T> {
     }
 
     private boolean isLowUsage() {
-        return size() == 16 && size() / length < 0.25;
+        return length >= 16 && (double) size() / length < 0.25;
     }
 
     /**

@@ -85,6 +85,7 @@ public class ArrayDequeTest {
 //        addIsEmptySizeTest();
 //        addRemoveTest();
         ArrayDeque ad1 = new ArrayDeque();
+        ad1.removeLast();
         ad1.addFirst(0);
         ad1.addFirst(1);
         ad1.addFirst(2);
@@ -98,6 +99,17 @@ public class ArrayDequeTest {
         ad1.addFirst(10);
         ad1.addFirst(11);
         ad1.addFirst(12);
+        ad1.removeFirst();
+        ad1.removeFirst();
+        ad1.removeFirst();
+        ad1.removeFirst();
+        ad1.removeFirst();
+        ad1.removeFirst();
+        ad1.removeFirst();
+        ad1.removeFirst();
+        ad1.removeFirst();
+        ad1.removeFirst();
+
 
     }
 }

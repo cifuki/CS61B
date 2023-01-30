@@ -1,26 +1,9 @@
-import java.lang.module.FindException;
-
 public class LinkedListDeque<T> {
+
     /* 类基本成员变量 */
     private static int size;   //记录链表长度
     private Node<T> sentinelPrev; //前向哨兵节点
     private Node<T> sentinelNext; //后向哨兵节点
-
-    /* 构造器 */
-//    public LinkedListDeque(T item) {
-//        size = 1;
-//        Node node = new Node<>(item);
-//        sentinelPrev = (Node<T>) new Node<>(-1);
-//        sentinelNext = (Node<T>) new Node<>(1);
-//
-//        sentinelPrev.next = node;
-//        node.prev = sentinelPrev;
-//        node.next = sentinelNext;
-//        sentinelNext.prev = node;
-//
-//        sentinelPrev.prev = null;
-//        sentinelNext.next = null;
-//    }
 
     public LinkedListDeque() {
         size = 0;
