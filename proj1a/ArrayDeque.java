@@ -64,7 +64,7 @@ public class ArrayDeque<T> {
         array[right] = null;
         //判断是否利用率低，如果是则需要缩容
         if (isLowUsage()) {
-            resize((int) (size() * 0.5));
+            resize((int) (length * 0.5));
         }
         return res;
     }
@@ -84,7 +84,7 @@ public class ArrayDeque<T> {
         left = (left + 1) % length;
         //判断是否利用率低
         if (isLowUsage()) {
-            resize((int) (size() * 0.5));
+            resize((int) (length * 0.5));
         }
         return res;
     }
