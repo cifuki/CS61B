@@ -110,6 +110,9 @@ public class ArrayDeque<T> {
                 i = i % length;
                 newArray[j] = array[i];
                 size += 1;
+                if (i == ((right - 1 + length) % length)) {
+                    break;
+                }
             }
         }
 
