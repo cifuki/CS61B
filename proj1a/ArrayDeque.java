@@ -28,22 +28,27 @@ public class ArrayDeque<T> {
         return size() == length - 1;
     }
 
+    /**
+     * 首先判断数组是否满了，满了则需要扩容
+     * addLast插入right指针所在位置，因为right指针指向空，所以先插入再移动
+     */
     public void addLast(T item) {
-        //判断数组是否满了，满了则需要扩容
         if (isFull()) {
             resize((int) (length * 1.5));
         }
-        //将item插入后向指针所在的位置
 
         array[right] = item;
         right = (right + 1 + length) % length;
     }
 
+    /**
+     * 首先判断数组是否满了，满了则需要扩容
+     * addFirst插入left指针所在位置，因为left指针指向不为空，所以先移动再插入
+     */
     public void addFirst(T item) {
         if (isFull()) {
             resize((int) (length * 1.5));
         }
-        //将item插入前向指针所在的位置
 
         left = (left -1 + length) % length;
         array[left] = item;
