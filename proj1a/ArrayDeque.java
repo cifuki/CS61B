@@ -7,7 +7,7 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         left = 0;
         right = 0;
-        length = 3;
+        length = 8;
         array = (T[]) new Object[length];
     }
 
