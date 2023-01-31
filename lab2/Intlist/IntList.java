@@ -33,6 +33,13 @@ public class IntList {
         this(0, null);
     }
 
+    /** Adds an item to the front of the list. */
+    public IntList addFirst(int f, IntList r) {
+        IntList head = new IntList(f, r);
+        return head;
+
+    }
+
     /**
      * Returns a list equal to L with all elements squared. Destructive.
      */
