@@ -82,6 +82,10 @@ public class IntListTest {
         assertNotEquals(c, IntList.reverse(a));
         assertNull(IntList.reverse(null));
         assertEquals(d, IntList.reverse(e));
+
+        IntList f = IntList.of(1, 2, 3, 4);
+        IntList g = IntList.of(4, 3, 2, 1);
+        assertEquals(f, IntList.reverse(g));
     }
 
 }

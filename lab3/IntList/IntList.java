@@ -251,28 +251,24 @@ public class IntList {
         return out.toString();
     }
 
-    public static IntList reverse(IntList in) {
+    public static IntList reverse(IntList intList) {
         /* how to reverse a IntList?
         1. 先查看这个链表的结构--单向链表
         2. 要拿到最后的结点，只能遍历链表，在遍历过程中记下所有的结点的值
+        3. 利用头插法，刚好能得到反转的链表
          */
-        int len = 0;
-        IntList intList = in;
         if (intList == null) {
             return null;
         }
-        ArrayList<Integer> arrayList = new ArrayList<Integer>();
-        while (intList != null) {
-            arrayList.add(intList.first);
+
+        IntList returnList = new IntList(intList.first, null);
+
+        while (intList.rest != null) {
             intList = intList.rest;
-            len += 1;
+            returnList = new IntList(intList.first, returnList);
         }
 
-        Integer[] array = new Integer[len];
-        for (int i = 0; i < len; i++) {
-            array[i] = arrayList.get(len - i - 1);
-        }
+        return returnList;
 
-        return IntList.of(array);
     }
 }
